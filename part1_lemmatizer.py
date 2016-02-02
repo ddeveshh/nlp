@@ -8,6 +8,7 @@ from nltk.util import bigrams
 from nltk.util import trigrams
 from nltk.corpus import wordnet
 
+
 def get_wordnet_pos(treebank_tag):
 
     if treebank_tag.startswith('J'):

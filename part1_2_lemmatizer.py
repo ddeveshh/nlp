@@ -1,22 +1,40 @@
 import nltk
 import math
-from nltk import sent_tokenize, word_tokenize
 from nltk.corpus import gutenberg
-from nltk.util import bigrams
-from nltk.util import trigrams
-
-text = gutenberg.raw('austen-emma.txt');
-nltk_sents = sent_tokenize(text)						# contains the list of sentences detected from the tool
-nltk_words = word_tokenize(text)
-dictn=list(set(nltk_words))
-tokens = nltk_words
-print type(tokens[0])
-tokens = [token.lower() for token in tokens if len(token) > 1] 		# same as unigrams
-bi_tokens = list(bigrams(tokens))					# getting the bigrams
-tri_tokens = list(trigrams(tokens))
+from pattern.en import *
 
 
-uni_fdist = nltk.FreqDist(tokens)
+text = gutenberg.raw('austen-emma.txt')
+#pprint(parse(text,chunks = False, tags = False).split())
+pattern_words = parse(text,chunks = False, tags = False, encoding = 'utf-8').split()
+pattern_sent = tokenize(text)
+#print pattern_words
+tokens = pattern_words
+'''print type(tokens[0][0][0])
+print tokens[0]
+print tokens[0][1][0].lower()'''
+l = []
+for token in tokens:
+	for i in token:
+		for j in i:
+			l.append(j.lower())
+tokens = l
+#tokens = [token.lower() for token in tokens if len(token) > 1]
+#print tokens
+#print len(tokens)
+lemma_tokens = [lemma(token) for token in tokens if len(token) > 1]
+tokens = lemma_tokens
+#print len(tokens)
+#dictn=list(set(tokens))
+#print type(text)
+r = ' '.join(tokens)
+
+uni_tokens = ngrams(r,n = 1)
+bi_tokens =  ngrams(r, n = 2)
+tri_tokens =  ngrams(r, n = 3)
+
+uni_fdist = nltk.FreqDist(uni_tokens)
+
 
 uni_freq = 0
 
@@ -72,5 +90,4 @@ for k,v in tri_fdist.most_common():
 		no1 = no1+1
 		
 print "for 70 percentage trigrams needed ",no1
-
 
