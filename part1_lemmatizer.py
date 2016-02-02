@@ -27,7 +27,7 @@ wordnet_lemmatizer = WordNetLemmatizer()
 text = gutenberg.raw('austen-emma.txt');
 nltk_sents = sent_tokenize(text)						# contains the list of sentences detected from the tool
 nltk_words = word_tokenize(text)
-print len(nltk_words)
+#print len(nltk_words)
 
 #fnltk_words = [wordnet_lemmatizer.lemmatize(nltk_word) for nltk_word in nltk_words]
 #print len(fnltk_words)
@@ -36,7 +36,7 @@ tokens = nltk_words
 
 tokens = [token.lower() for token in tokens if len(token) > 1] 		# same as unigrams
 lemma_tokens = [wordnet_lemmatizer.lemmatize(token, wordnet.VERB) for token in tokens]
-print len(lemma_tokens)
+#print len(lemma_tokens)
 tokens = lemma_tokens
 bi_tokens = list(bigrams(tokens))					# getting the bigrams
 tri_tokens = list(trigrams(tokens))
@@ -44,7 +44,32 @@ tri_tokens = list(trigrams(tokens))
 
 uni_fdist = nltk.FreqDist(tokens)
 
+bi_fdist = nltk.FreqDist(bi_tokens)
+#print len(bi_fdist)
+tri_fdist = nltk.FreqDist(tri_tokens)
+
+tri_freq = 0
+bi_freq = 0
 uni_freq = 0
+
+
+
+print "top 15 unigrams with lemma\n\n"
+
+for k,v in uni_fdist.most_common(15):
+	print k,v
+
+print "top 15 bigrams with lemma\n\n"
+
+for k,v in bi_fdist.most_common(15):
+	print k,v
+
+print "top 15 trigrams with lemma\n\n"
+
+for k,v in tri_fdist.most_common(15):
+	print k,v
+
+
 
 for k,v in uni_fdist.most_common():
 	#print k,v
@@ -66,9 +91,6 @@ print "for 90 percentage unigrams needed ",no1
 
 
 
-bi_fdist = nltk.FreqDist(bi_tokens)
-#print len(bi_fdist)
-bi_freq = 0
 for k,v in bi_fdist.most_common():
     #print k,v
     bi_freq = bi_freq + v
@@ -84,8 +106,7 @@ for k,v in bi_fdist.most_common():
 
 print "for 80 percentage bigrams needed ",no2
 
-tri_fdist = nltk.FreqDist(tri_tokens)
-tri_freq = 0
+
 for k,v in tri_fdist.most_common():
 	tri_freq = tri_freq + v
 	#print k,v

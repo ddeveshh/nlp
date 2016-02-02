@@ -18,9 +18,12 @@ for token in tokens:
 tokens = l
 tokens = [token.lower() for token in tokens if len(token) > 1]
 #dictn=list(set(tokens))
-uni_tokens = ngrams(text,n = 1)
-bi_tokens =  ngrams(text, n = 2)
-tri_tokens =  ngrams(text, n = 3)
+r = ' '.join(tokens)
+dictn=list(set(tokens))
+
+uni_tokens = ngrams(r,n = 1)
+bi_tokens =  ngrams(r, n = 2)
+tri_tokens =  ngrams(r, n = 3)
 
 uni_fdist = nltk.FreqDist(uni_tokens)
 
@@ -80,4 +83,18 @@ for k,v in tri_fdist.most_common():
 		
 print "for 70 percentage trigrams needed ",no1
 
+print "top 15 unigrams without lemma\n\n"
+
+for k,v in uni_fdist.most_common(15):
+	print k,v
+
+print "top 15 bigrams without lemma\n\n"
+
+for k,v in bi_fdist.most_common(15):
+	print k,v
+
+print "top 15 trigrams without lemma\n\n"
+
+for k,v in tri_fdist.most_common(15):
+	print k,v
 

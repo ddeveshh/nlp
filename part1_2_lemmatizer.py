@@ -91,3 +91,19 @@ for k,v in tri_fdist.most_common():
 		
 print "for 70 percentage trigrams needed ",no1
 
+
+
+print "top 15 unigrams with lemma\n\n"
+
+for k,v in uni_fdist.most_common(15):
+	print k,v
+
+print "top 15 bigrams with lemma\n\n"
+
+for k,v in bi_fdist.most_common(15):
+	print k,v
+
+print "top 15 trigrams with lemma\n\n"
+
+for k,v in tri_fdist.most_common(15):
+	print k,v

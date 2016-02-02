@@ -10,15 +10,36 @@ nltk_sents = sent_tokenize(text)						# contains the list of sentences detected 
 nltk_words = word_tokenize(text)
 dictn=list(set(nltk_words))
 tokens = nltk_words
-print type(tokens[0])
+#print type(tokens[0])
 tokens = [token.lower() for token in tokens if len(token) > 1] 		# same as unigrams
 bi_tokens = list(bigrams(tokens))					# getting the bigrams
 tri_tokens = list(trigrams(tokens))
 
 
 uni_fdist = nltk.FreqDist(tokens)
+bi_fdist = nltk.FreqDist(bi_tokens)
 
+tri_fdist = nltk.FreqDist(tri_tokens)
+tri_freq = 0
 uni_freq = 0
+bi_freq = 0
+
+
+print "top 15 unigrams\n\n"
+
+for k,v in uni_fdist.most_common(15):
+	print k,v
+
+print "top 15 bigrams\n\n"
+
+for k,v in bi_fdist.most_common(15):
+	print k,v
+
+print "top 15 trigrams\n\n"
+
+for k,v in tri_fdist.most_common(15):
+	print k,v
+
 
 for k,v in uni_fdist.most_common():
 	#print k,v
@@ -40,9 +61,9 @@ print "for 90 percentage unigrams needed ",no1
 
 
 
-bi_fdist = nltk.FreqDist(bi_tokens)
+
 #print len(bi_fdist)
-bi_freq = 0
+
 for k,v in bi_fdist.most_common():
     #print k,v
     bi_freq = bi_freq + v
@@ -58,8 +79,6 @@ for k,v in bi_fdist.most_common():
 
 print "for 80 percentage bigrams needed ",no2
 
-tri_fdist = nltk.FreqDist(tri_tokens)
-tri_freq = 0
 for k,v in tri_fdist.most_common():
 	tri_freq = tri_freq + v
 	#print k,v
